@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- library -->
+  <link rel="stylesheet" href="./src/css/library/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="./src/js/library/jquery-3.2.1.slim.min.js"></script>
+  <script src="./src/js/library/popper.min.js"></script>
+  <script src="./src/js/library/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./src/css/style.css">
+  <title>Rừng Trầm Bà Vụ</title>
+</head>
+
+<body>
+  <div id="loading">
+    <div class="title">Rừng Tràm Bà Vụ</div>
+    
+    <div class="btn-play disable">
+      <i class="fa-solid fa-play"></i>
+    </div>
+    <div class="progress-container">
+      <!-- <div id="myProgress">
+        <div id="myBar">1</div>
+      </div> -->
+    </div>
+  </div>
+  <div id="panolens-separate-container"></div>
+  <div id="menuLeft">
+    <div class="buttonShowMenu">
+      <i class="fas fa-angle-right"></i>
+    </div>
+    <ul class="menuMain">
+      <li class="menuMain-item" data-action="introduce">Giới thiệu Rừng Trầm Bà Vụ</li>
+      <li class="menuMain-item" data-action="showHouse">Virtual Tour</li>
+      <li class="menuMain-item" data-action="showSlide">Ảnh</li>
+    </ul>
+  </div>
+  <div id="popup">
+    <div class="popupmainOverlay"></div>
+    <div class="popupmain">
+      <button class="buttonClose">x</button>
+      <div class="contentPopup">
+        <iframe class="iframePanolens" src="https://my.matterport.com/show/?m=u2vvVuT136f"></iframe>
+        <iframe class="iframePanolensYoutube" src="https://www.youtube.com/embed/iYrawjUTeYU"></iframe>
+        <iframe class="iframeVideoHouse" src="https://www.youtube.com/embed/iYrawjUTeYU"></iframe>
+        <div class="sliderContent">
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+            </div>
+            <a class="carousel-control-prev carousel-icon-custom" href="#carouselExampleControls" role="button" data-slide="prev">
+              <i class="fas fa-angle-left"></i>
+            </a>
+            <a class="carousel-control-next carousel-icon-custom" href="#carouselExampleControls" role="button" data-slide="next">
+                <i class="fas fa-angle-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./src/js/library/three.min.js"></script>
+  <script src="./src/js/library/panolens.min.js"></script>
+  <script src="./src/js/index.js"></script>
+</body>
+
+</html>
