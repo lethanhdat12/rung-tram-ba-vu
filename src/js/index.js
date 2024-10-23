@@ -1,58 +1,62 @@
-const assetPath = "src/access/img/";
-const panorama = new PANOLENS.ImagePanorama(`${assetPath}/DJI_0946.jpg`);
+const assetPath = "src/access/img";
 const container = document.querySelector("#panolens-separate-container")
-const viewer = new PANOLENS.Viewer({controlBar: true, container: container , output : "console"});
+const viewer = new PANOLENS.Viewer({ controlBar: true, container: container });
 const centerImg = new THREE.Vector3(4589.76, -1963.45, -125.42);
 
 const potision = new THREE.Vector3(1, 1, 1)
 const infoSpot = new PANOLENS.Infospot(200, PANOLENS.DataImage.Info)
 const infoSpot2 = new PANOLENS.Infospot(200, PANOLENS.DataImage.Info)
 
-
-infoSpot.position.set(4590.01, -2000, -463.48);
-infoSpot.addEventListener('click', () => {
-    MenuObser.toggleContentPopUp("house");
-    MainObseverDom.showPopUp();
-});
-
-
-
-infoSpot2.position.set(3357.87, -1576.49, 3341.54);
-infoSpot2.addEventListener('click', () => {
-    MenuObser.toggleContentPopUp("youtubeHouse");
-    MainObseverDom.showPopUp();
-});
-
-panorama.add(infoSpot)
-panorama.add(infoSpot2)
-
-// panorama.addEventListener('progress', onProgress);
-viewer.add(panorama);
-// const progressElement = document.querySelector("#myBar");
-panorama.addEventListener('enter-fade-start', function () {
-    MainObseverDom.togglePlay();
-    // progressElement.style.width = '100%';
-    // progressElement.innerHTML = `100%`;
-    if (viewer && viewer.tweenControlCenter) {
-        viewer.tweenControlCenter(centerImg , 1);
-    }
-});
-
 function onProgress(event) {
     progress = event.progress.loaded / event.progress.total * 100;
-    if (progress <= 92) {
-        progressElement.style.width = progress + '%';
-        progressElement.innerHTML = `${Math.round(progress)}%`;
+    console.log("🚀 ~ onProgress ~ progress:", progress)
+    if (progress > 90) {
+        MainObseverDom.togglePlay();
     }
 }
 
+function loadPanorama(imageUrl) {
+    return new Promise((resolve, reject) => {
+        const panorama = new PANOLENS.ImagePanorama(imageUrl);
+        resolve(panorama);
+    });
+}
+
+
+
 window.onload = function () {
+    loadPanorama(`${assetPath}/DJI_0946.jpg`)
+        .then(panorama => {
+            panorama.addEventListener('progress', onProgress);
+            infoSpot.position.set(4590.01, -2000, -463.48);
+            infoSpot.addEventListener('click', () => {
+                MenuObser.toggleContentPopUp("house");
+                MainObseverDom.showPopUp();
+            });
+
+            infoSpot2.position.set(3357.87, -1576.49, 3341.54);
+            infoSpot2.addEventListener('click', () => {
+                MenuObser.toggleContentPopUp("youtubeHouse");
+                MainObseverDom.showPopUp();
+            });
+
+            viewer.add(panorama);
+            panorama.add(infoSpot)
+            panorama.add(infoSpot2)
+            viewer.setPanorama(panorama);
+            viewer.tweenControlCenter(centerImg, 1);
+
+        })
+        .catch(err => {
+            console.error('Error loading panorama:', err);
+        });
     MainObseverDom.start();
     MenuObser.setAction();
     MenuObser.preLoadSlide();
     $('.carousel').carousel({
         interval: 5000
     })
+
 }
 const MainObseverDom = {
     popup: document.querySelector("#popup"),
@@ -85,6 +89,7 @@ const MainObseverDom = {
     },
     handlePlay: function () {
         this.btnPlay.addEventListener("click", () => {
+            console.log("clickkk =>>>>>>>>>>>")
             this.loading.classList.add("hidden");
             setTimeout(() => {
                 this.loading.classList.add("withnone");
@@ -122,7 +127,7 @@ const MenuObser = {
     },
     toggleContentPopUp: function (key) {
         switch (key) {
-            case "youtubeHouse": 
+            case "youtubeHouse":
                 this.IframeVideoHouse.setAttribute("style", "display : block");
                 this.IframeItemYoutube.setAttribute("style", "display : none")
                 this.IframeItem.setAttribute("style", "display : none")
@@ -161,7 +166,7 @@ const MenuObser = {
     },
     preLoadSlide: function () {
         let html = ``;
-        const srcName = ["PANO0001.jpg", "PANO0001.jpg", "PANO0001.jpg" , "PANO0001.jpg"];
+        const srcName = ["PANO0001.jpg", "PANO0001.jpg", "PANO0001.jpg", "PANO0001.jpg"];
         srcName.forEach((item, index) => { html += this.renderItemSlide(item, index) })
         this.ContentItem.innerHTML = html;
     },

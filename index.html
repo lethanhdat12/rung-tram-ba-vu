@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- library -->
   <link rel="stylesheet" href="./src/css/library/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="./src/js/library/jquery-3.2.1.slim.min.js"></script>
@@ -18,7 +17,7 @@
   <div id="loading">
     <div class="title">Rừng Tràm Bà Vụ</div>
     
-    <div class="btn-play disable">
+    <div class="btn-play">
       <i class="fa-solid fa-play"></i>
     </div>
     <div class="progress-container">
@@ -44,8 +43,8 @@
       <button class="buttonClose">x</button>
       <div class="contentPopup">
         <iframe class="iframePanolens" src="https://my.matterport.com/show/?m=u2vvVuT136f"></iframe>
-        <iframe class="iframePanolensYoutube" src="https://www.youtube.com/embed/iYrawjUTeYU"></iframe>
-        <iframe class="iframeVideoHouse" src="https://www.youtube.com/embed/iYrawjUTeYU"></iframe>
+        <iframe class="iframePanolensYoutube" id="player" type="text/html" src="https://www.youtube.com/embed/iYrawjUTeYU?autoplay=0&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe class="iframeVideoHouse" id="player1" ype="text/html" src="https://www.youtube.com/embed/2tyfki34jMM?autoplay=0&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         <div class="sliderContent">
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -61,6 +60,46 @@
       </div>
     </div>
   </div>
+  <script>
+    let scriptUrl = 'https:\/\/www.youtube.com\/s\/player\/43bc9526\/www-widgetapi.vflset\/www-widgetapi.js'; try { var ttPolicy = window.trustedTypes.createPolicy("youtube-widget-api", { createScriptURL: function (x) { return x } }); scriptUrl = ttPolicy.createScriptURL(scriptUrl) } catch (e) { } var YT; if (!window["YT"]) YT = { loading: 0, loaded: 0 }; var YTConfig; if (!window["YTConfig"]) YTConfig = { "host": "https://www.youtube.com" };
+    if (!YT.loading) {
+      YT.loading = 1; (function () {
+        var l = []; YT.ready = function (f) { if (YT.loaded) f(); else l.push(f) }; window.onYTReady = function () { YT.loaded = 1; var i = 0; for (; i < l.length; i++)try { l[i]() } catch (e) { } }; YT.setConfig = function (c) { var k; for (k in c) if (c.hasOwnProperty(k)) YTConfig[k] = c[k] }; var a = document.createElement("script"); a.type = "text/javascript"; a.id = "www-widgetapi-script"; a.src = scriptUrl; a.async = true; var c = document.currentScript; if (c) {
+          var n = c.nonce || c.getAttribute("nonce"); if (n) a.setAttribute("nonce",
+            n)
+        } var b = document.getElementsByTagName("script")[0]; b.parentNode.insertBefore(a, b)
+      })()
+    };
+
+    let player;
+    let player1;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        events: { 'onReady': onPlayerReady },
+        videoId: 'iYrawjUTeYU',
+        playerVars: {
+          'playsinline': 1
+        },
+      });
+      player1 = new YT.Player('player1', {
+        events: { 'onReady': onPlayerReady },
+        videoId: '2tyfki34jMM',
+        playerVars: {
+          'playsinline': 1
+        },
+      });
+    }
+    function onPlayerReady(event) {
+      document.querySelector(".buttonClose").addEventListener('click', function () {
+        if (player && player.getPlayerState() > 0) {
+          player.pauseVideo();
+        }
+        if (player1 && player1.getPlayerState() > 0) {
+          player1.pauseVideo();
+        }
+      })
+    }
+  </script>
   <script src="./src/js/library/three.min.js"></script>
   <script src="./src/js/library/panolens.min.js"></script>
   <script src="./src/js/index.js"></script>
