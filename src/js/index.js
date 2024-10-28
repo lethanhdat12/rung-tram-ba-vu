@@ -166,7 +166,7 @@ const MenuObser = {
     },
     preLoadSlide: function () {
         let html = ``;
-        const srcName = ["PANO0001.jpg", "PANO0001.jpg", "PANO0001.jpg", "PANO0001.jpg"];
+        const srcName = ["PANO0001.jpg", "PANO0001(1).jpg", "PANO0001(2).jpg", "PANO0001(3).jpg",, "PANO0001(4).jpg", "PANO0001(5).jpg", "PANO0001(6).jpg", "PANO0001(7).jpg", "PANO0001(8).jpg"];
         srcName.forEach((item, index) => { html += this.renderItemSlide(item, index) })
         this.ContentItem.innerHTML = html;
     },
